@@ -1,4 +1,3 @@
-import { ApiResult } from './../models/api-result.interface';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -8,14 +7,14 @@ import { ApiRequest } from '../models/api-request.interface';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class QueryService {
+export class QueryService {
   private readonly APIUrl = 'http://66.70.229.82:8181/';
 
   constructor(private httpClient: HttpClient) { }
 
   getToken<ApiResult>(body: ApiRequest): Observable<ApiResult> {
     return this.httpClient
-      .post<ApiResult>(this.APIUrl + 'Authorize', body, {})
+      .post<ApiResult>(this.APIUrl + 'Authorize', body)
       .pipe(catchError(this.handleError));
   }
 
