@@ -13,18 +13,20 @@
                   <h4 class="mt-1 mb-5 pb-1">We are The Smart Bridge Team</h4>
                 </div>
 
-                <form name="form" #form="ngForm" (ngSubmit)="login(form)">
+                <form  name="form" #form="ngForm" (ngSubmit)="login(form)">
                   <p>Please login to your account</p>
 
                   <div class="form-outline mb-4">
-                    <input type="email" id="form2Example11" class="form-control" name="email"
+                    <label class="form-label" for="form2Example11" >Username</label>
+                    <input [(ngModel)]="requestModel.email" name="email" type="email" id="form2Example11" class="form-control"
                       placeholder="Phone number or email address" />
-                    <label class="form-label" for="form2Example11" [(ngModel)]="requestModel.email">Username</label>
+
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" id="form2Example22" class="form-control" name="password"/>
-                    <label class="form-label" for="form2Example22" [(ngModel)]="requestModel.password">Password</label>
+                    <label class="form-label" for="form2Example22" >Password</label>
+                    <input [(ngModel)]="requestModel.password" name="password" type="password" id="form2Example22" class="form-control" />
+
                   </div>
                   <button type="submit">Login</button>
                 </form>
