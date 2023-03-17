@@ -5,6 +5,7 @@ import { ApiRequest } from 'src/app/models/api-request.interface';
 import { QueryService } from 'src/app/services/query.service';
 import { webSocket } from 'rxjs/webSocket';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login(): void {
+  login(form: NgForm): void {
     const getMessageObservable = this.queryService
       .getToken(this.requestModel)
       .pipe(
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
   }
 
   logout(): void {
-    this.router.navigate('/login')
+    this.router.navigate(['/login'])
   }
 
   connectToWebSocket(token: string) {
