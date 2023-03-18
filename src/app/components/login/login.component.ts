@@ -1,19 +1,27 @@
 import { ApiResult } from './../../models/api-result.interface';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { concatMap } from 'rxjs/operators';
 import { ApiRequest } from 'src/app/models/api-request.interface';
 import { QueryService } from 'src/app/services/query.service';
 import { webSocket } from 'rxjs/webSocket';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ApiResult2 } from 'src/app/models/api-result2.interface';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   constructor(private queryService: QueryService, private router: Router) { }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe())
+  }
+
+  subscriptions:Subscription[] = []
 
   requestModel: ApiRequest = { email: 'sean@test.com', password: 'SeanPass' };
 
@@ -29,9 +37,10 @@ export class LoginComponent implements OnInit {
           return this.queryService.getGreeting(token);
         })
       );
-    getMessageObservable.subscribe((message) => {
-      this.showWelcome(message as string);
+    const messageSubscription = getMessageObservable.subscribe((message) => {
+      this.showWelcome((message as ApiResult2).data);
     });
+    this.subscriptions.push(messageSubscription);
   }
 
   showWelcome(message: string) {
