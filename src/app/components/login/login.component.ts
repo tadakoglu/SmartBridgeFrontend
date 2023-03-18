@@ -13,11 +13,11 @@ import { NgForm } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
-  constructor(private queryService: QueryService, private router: Router) {}
+  constructor(private queryService: QueryService, private router: Router) { }
 
   requestModel: ApiRequest = { email: 'sean@test.com', password: 'SeanPass' };
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   login(form: NgForm): void {
     const getMessageObservable = this.queryService
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   showWelcome(message: string) {
-    console.log(message);
+    this.router.navigate(['/welcome/' + message,])
   }
 
   logout(): void {
